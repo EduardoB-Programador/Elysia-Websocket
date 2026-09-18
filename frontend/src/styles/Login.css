@@ -1,0 +1,70 @@
+:root {
+    --bg-login: #0f0820;
+    --submit-bg: #1a1628;
+    --submit-hover-bg: #2a2638;
+    --text-color: #c0c0ff;
+}
+
+#login-container {
+    margin: 100px auto;
+    padding: 50px;
+
+    width: 500px;
+    height: 300px;
+    background: var(--bg-login);
+    border-radius: 50px;
+}
+
+#login-container > form {
+    /* background: #fff; */
+    width: inherit;
+    height: inherit;
+    
+    display: flex;
+
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#login-container > form > div > label {
+    display: block;
+}
+
+.form-input {
+    outline: none;
+    border: none;
+
+    font-size: 14px;
+    color: var(--text-color);
+
+    border-radius: 7px;
+    padding: 5px;
+
+    background-color: var(--bg-color);
+}
+
+#submit-button {
+    outline: none;
+    border: none;
+
+    width: 50%;
+
+    font-size: 20px;
+    
+    color: var(--text-color);
+    background: var(--submit-bg);
+
+    border-radius: 20px;
+    padding: 12px;
+}
+
+#submit-button:hover {
+    background: var(--submit-hover-bg);
+}
+
+#error-message {
+    text-align: center;
+    color: #ff2020;
+    font-weight: 1000;
+}
