@@ -45,6 +45,7 @@ export default function AdminPage() {
         event.preventDefault()
         console.log("trigger")
         const text = textRef.current?.value
+        textRef.current!.value = ""
 
         const data = base64ToUtf8(cookies.user_cred)
 

@@ -20,11 +20,11 @@ export default function UserPage() {
 		}
 
 		socket.onmessage = (event) => {
-
+			console.log("Reached")
 			const { payload, type } = JSON.parse(event.data) as { type: string, payload: Data|Data[] }
 			console.log(payload)
 
-			if (type === "hystory")
+			if (type === "history")
 				setData(payload as Data[])
 			else if (type === "message")
 				setData((prev) => [...(prev ?? []), payload as Data])

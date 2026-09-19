@@ -4,7 +4,7 @@ import ValidationFacade from "./src/validation/ValidationFacade"
 
 let data: { id: number, author: string, message: string }[] = []
 let id = 0
-const TOPIC1 = "GENERAL" as const
+const subscribers = new Set()
 
 const app = new Elysia()
     .use(cors())
@@ -34,7 +34,11 @@ const app = new Elysia()
                 const entry = { ...message, id: id }
                 data.push(entry)
                 id++
-                ws.publish(TOPIC1, { type: "message", payload: entry })
+                console.log(`About to publish: ${entry}`)
+                for (const user of (subscribers as Set<typeof ws>)) {
+                    user.send(JSON.stringify({type: "message", payload: entry}))
+                }
+                console.log("Published")
             } catch (err: unknown) {
                 console.log(err)
             }
@@ -47,16 +51,17 @@ const app = new Elysia()
     .ws("/ws/user", {
         open(ws) {
             try {
-                ws.subscribe(TOPIC1)
+                subscribers.add(ws)
+                console.log(ws.subscriptions)
                 console.log(`Connection established with device with id ${ws.id}`)
-                ws.send({ payload: data, type: "history" })
+                ws.send(JSON.stringify({ payload: data, type: "history" }))
             } catch (err: unknown) {
                 console.log(err)
             }
         },
 
         close(ws) {
-            ws.unsubscribe(TOPIC1)
+            subscribers.delete(ws)
             console.log("Connection ended with device with id " + ws.id)
         }
     })
